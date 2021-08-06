@@ -1,0 +1,45 @@
+﻿<UserControl
+        x:Class="ChatClient.CustomControls.BetterTextBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        d:DesignHeight="23"
+        d:DesignWidth="300"
+        xmlns:c="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        Name="Control">
+    <UserControl.Resources>
+        <c:BooleanToVisibilityConverter
+                x:Key="BoolToVisibility" />
+        <ControlTemplate x:Key="RoundCornerTxtBox" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="White"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <TextBox
+                Name="MainTextBox"
+                Template="{StaticResource RoundCornerTxtBox}"
+                SelectionChanged="MainTextBox_SelectionChanged"
+                TextChanged="MainTextBox_TextChanged"
+                GotKeyboardFocus="MainTextBox_GotKeyboardFocus" Background="#00000000" BorderBrush="White" Foreground="White" FontSize="{Binding BTBFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}" CaretBrush="#00000000" FontFamily="Humnst777 Lt BT" Padding="{Binding BTBPadding, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                VerticalContentAlignment="{Binding BTBVContentAlign, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            />
+        <Canvas
+                Visibility="{Binding IsKeyboardFocusWithin,
+                    ElementName=Control,
+                    Converter={StaticResource BoolToVisibility}}"
+                Height="{Binding ActualHeight, ElementName=MainTextBox}"
+                Width="{Binding ActualWidth, ElementName=MainTextBox}">
+            <Rectangle
+                    HorizontalAlignment="Left"
+                    Name="Caret"
+                    Width="1"
+                    Fill="White" />
+        </Canvas>
+    </Grid>
+</UserControl>

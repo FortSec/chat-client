@@ -1,0 +1,32 @@
+﻿<Page x:Name="OnboardingPage" x:Class="ChatClient.data.pages.Onboarding"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatClient.data.pages"
+      xmlns:control="clr-namespace:ChatClient.CustomControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="609.04" d:DesignWidth="1042"
+      Title="Onboarding" Background="#FF303952">
+    <Page.Resources>
+        <ControlTemplate x:Key="RoundCornerTxtBox" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="White"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+        </ControlTemplate>
+    </Page.Resources>
+
+    <Grid HorizontalAlignment="Center" Width="1042">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Polygon x:Name="BgPolyShadow" Points="0,0 1042,0 1042,310 0,400" Fill="#FF2F374F" UseLayoutRounding="True" StrokeThickness="0" Grid.ColumnSpan="2"/>
+        <Polygon x:Name="BgPoly" Points="0,0 1042,0 1042,280 0,385" Fill="#FF293147" UseLayoutRounding="True" StrokeThickness="0" Grid.ColumnSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="262,139,0,0" Text="Welcome to FortSec chat" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Humnst777 Lt BT" Foreground="White" Height="48" Width="528" FontSize="48" Grid.ColumnSpan="2"/>
+        <Label Content="Enter the URL of the FortSec Chat REST host" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
+        <control:BetterTextBox Margin="397,419,397,146" Grid.ColumnSpan="2" Foreground="White" BTBFontSize="24" Height="44" Background="#FF303952" BTBVContentAlign="Center"/>
+    </Grid>
+</Page>
