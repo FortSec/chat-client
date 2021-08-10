@@ -13,6 +13,8 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Diagnostics;
 
+using ChatClient.CustomControls;
+
 namespace ChatClient.CustomControls
 {
     /// <summary>
@@ -25,6 +27,8 @@ namespace ChatClient.CustomControls
         public static readonly DependencyProperty BTBfontSizeProperty = DependencyProperty.Register("BTBFontSize", typeof(int), typeof(BetterTextBox), new PropertyMetadata(16));
         public static readonly DependencyProperty BTBpaddingProperty = DependencyProperty.Register("BTBPadding", typeof(string), typeof(BetterTextBox), new PropertyMetadata("5,5,5,5"));
         public static readonly DependencyProperty BTBvContentAlignProperty = DependencyProperty.Register("BTBVContentAlign", typeof(string), typeof(BetterTextBox), new PropertyMetadata("Top"));
+        public event EventHandler BTBTextChanged;
+
         public int BTBFontSize
         {
             get { return (int)GetValue(BTBfontSizeProperty);  }
@@ -44,6 +48,11 @@ namespace ChatClient.CustomControls
         public BetterTextBox()
         {
             InitializeComponent();
+        }
+
+        public string GetBTBValue()
+        {
+            return MainTextBox.Text;
         }
 
         private void UpdateCaretPosition()
@@ -75,7 +84,11 @@ namespace ChatClient.CustomControls
 
         private void MainTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            BTBTextChangedEventArgs eventArgs = new BTBTextChangedEventArgs();
+            eventArgs.BoxContent = MainTextBox.Text;
             UpdateCaretPosition();
+            if(BTBTextChanged != null)
+                BTBTextChanged(this, eventArgs);
         }
 
         private void MainTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

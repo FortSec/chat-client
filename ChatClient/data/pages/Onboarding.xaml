@@ -16,6 +16,23 @@
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
         </ControlTemplate>
+        <Style TargetType="Button" x:Key="SimpleBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Page.Resources>
 
     <Grid HorizontalAlignment="Center" Width="1042">
@@ -27,6 +44,9 @@
         <Polygon x:Name="BgPoly" Points="0,0 1042,0 1042,280 0,385" Fill="#FF293147" UseLayoutRounding="True" StrokeThickness="0" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Margin="262,139,0,0" Text="Welcome to FortSec chat" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Humnst777 Lt BT" Foreground="White" Height="48" Width="528" FontSize="48" Grid.ColumnSpan="2"/>
         <Label Content="Enter the URL of the FortSec Chat REST host" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
-        <control:BetterTextBox Margin="397,419,397,146" Grid.ColumnSpan="2" Foreground="White" BTBFontSize="24" Height="44" Background="#FF303952" BTBVContentAlign="Center"/>
+        <Button Style="{StaticResource SimpleBtn}" x:Name="EnterButton" Height="44" Width="44" Grid.Column="1" Margin="80,419,397,146" Cursor="Hand">
+            <Image Source="/data/assets/angle_right.png" />
+        </Button>
+        <control:BetterTextBox BTBTextChanged="MainTextBox_BTBTextChanged" x:Name="MainTextBox" Margin="397,419,397,146" Grid.ColumnSpan="2" Foreground="White" BTBFontSize="24" Height="44" Background="#FF303952" BTBVContentAlign="Center"/>
     </Grid>
 </Page>

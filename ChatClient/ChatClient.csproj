@@ -7,11 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="data\assets\angle_right.png" />
     <None Remove="data\assets\cancel.png" />
     <None Remove="data\assets\minimalize.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="data\assets\angle_right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="data\assets\cancel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
