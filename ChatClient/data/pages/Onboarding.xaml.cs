@@ -66,5 +66,10 @@ namespace ChatClient.data.pages
             Storyboard.SetTargetProperty(anim, new PropertyPath(Button.MarginProperty));
             storyboard.Begin(this);
         }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            AnimateContinueOut();
+        }
     }
 }

@@ -40,12 +40,49 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Polygon x:Name="BgPolyShadow" Points="0,0 1042,0 1042,310 0,400" Fill="#FF2F374F" UseLayoutRounding="True" StrokeThickness="0" Grid.ColumnSpan="2"/>
-        <Polygon x:Name="BgPoly" Points="0,0 1042,0 1042,280 0,385" Fill="#FF293147" UseLayoutRounding="True" StrokeThickness="0" Grid.ColumnSpan="2"/>
+        <Path x:Name="BgPolyShadowPath" Fill="#FF2F374F" Grid.ColumnSpan="2">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure x:Name="BgPolyShadowPath_fig" StartPoint="0, 0" IsClosed="True">
+                        <LineSegment x:Name="BgPolyShadow_TR" Point="1042, 0"/>
+                        <LineSegment x:Name="BgPolyShadow_BR" Point="1042, 310"/>
+                        <LineSegment x:Name="BgPolyShadow_BL" Point="0, 400"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path x:Name="BgPolyPath" Fill="#FF293147" Grid.ColumnSpan="2">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure x:Name="BgPolyPath_fig" StartPoint="0, 0" IsClosed="True">
+                        <LineSegment x:Name="BgPoly_TR" Point="1042, 0"/>
+                        <LineSegment x:Name="BgPoly_BR" Point="1042, 280"/>
+                        <LineSegment x:Name="BgPoly_BL" Point="0, 385"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
         <TextBlock HorizontalAlignment="Left" Margin="262,139,0,0" Text="Welcome to FortSec chat" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Humnst777 Lt BT" Foreground="White" Height="48" Width="528" FontSize="48" Grid.ColumnSpan="2"/>
         <Label Content="Enter the URL of the FortSec Chat REST host" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
-        <Button Style="{StaticResource SimpleBtn}" x:Name="EnterButton" Height="44" Width="44" Grid.Column="1" Margin="80,419,397,146" Cursor="Hand">
+        <Button Style="{StaticResource SimpleBtn}" x:Name="EnterButton" Height="44" Width="44" Grid.Column="1" Margin="80,419,397,146" Cursor="Hand" Click="EnterButton_Click">
             <Image Source="/data/assets/angle_right.png" />
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 375" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 272" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 395" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 306" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+                            
+                            <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                            <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
         </Button>
         <control:BetterTextBox BTBTextChanged="MainTextBox_BTBTextChanged" x:Name="MainTextBox" Margin="397,419,397,146" Grid.ColumnSpan="2" Foreground="White" BTBFontSize="24" Height="44" Background="#FF303952" BTBVContentAlign="Center"/>
     </Grid>
