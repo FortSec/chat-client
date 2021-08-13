@@ -55,6 +55,12 @@ namespace ChatClient.CustomControls
             return MainTextBox.Text;
         }
 
+        public Brush BTBBackground
+        {
+            get { return MainTextBox.Background; }
+            set { MainTextBox.Background = value; }
+        }
+
         private void UpdateCaretPosition()
         {
             var rectangle = MainTextBox.GetRectFromCharacterIndex(MainTextBox.CaretIndex);

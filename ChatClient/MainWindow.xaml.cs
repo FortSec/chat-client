@@ -29,6 +29,7 @@ namespace ChatClient
          * Pages init
          */
         private Onboarding onboarding = new Onboarding();
+        private Loading loading = new Loading();
 
         protected int dragMoveThresh = 25;
         private Storyboard storyboard;
@@ -36,6 +37,7 @@ namespace ChatClient
         public MainWindow()
         {
             InitializeComponent();
+            onboarding.ChangePage += new EventHandler(onboarding_ChangePage);
         }
 
         private void MainWindow1_MouseDown(object sender, MouseButtonEventArgs e)
@@ -70,6 +72,11 @@ namespace ChatClient
             Storyboard.SetTarget(opacityAnimation, onboarding.OnboardingPage);
             Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(Page.OpacityProperty));
             storyboard.Begin(this);
+        }
+
+        public void onboarding_ChangePage(object sender, EventArgs e)
+        {
+            MainFrame.NavigationService.Navigate(loading);
         }
     }
 }

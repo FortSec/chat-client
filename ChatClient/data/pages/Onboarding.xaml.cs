@@ -15,6 +15,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using ChatClient.CustomControls;
 using ChatClient.Utils;
+using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 
 namespace ChatClient.data.pages
@@ -25,6 +26,13 @@ namespace ChatClient.data.pages
     public partial class Onboarding : Page
     {
         private Storyboard storyboard;
+        public event EventHandler ChangePage;
+
+        private void ChangePageEvent(EventArgs e)
+        {
+            if( ChangePage != null)
+                ChangePage(this, e);
+        }
 
         public Onboarding()
         {
@@ -46,7 +54,7 @@ namespace ChatClient.data.pages
         private void AnimateContinueIn()
         {
             var anim = new ThicknessAnimation();
-            anim.To = new Thickness(124, 419, 353, 146);
+            anim.To = new Thickness(645, 419, 353, 146);
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             storyboard = new Storyboard();
             storyboard.Children.Add(anim);
@@ -58,7 +66,7 @@ namespace ChatClient.data.pages
         private void AnimateContinueOut()
         {
             var anim = new ThicknessAnimation();
-            anim.To = new Thickness(80, 419, 397, 146);
+            anim.To = new Thickness(601, 419, 397, 146);
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(200));
             storyboard = new Storyboard();
             storyboard.Children.Add(anim);
@@ -67,9 +75,23 @@ namespace ChatClient.data.pages
             storyboard.Begin(this);
         }
 
-        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        private void AnimateAllOut()
         {
-            AnimateContinueOut();
+            DoubleAnimation anim = new DoubleAnimation();
+            anim.To = 0.0d;
+            anim.Duration = new Duration(TimeSpan.FromMilliseconds(400));
+            storyboard = new Storyboard();
+            storyboard.Children.Add(anim);
+            Storyboard.SetTarget(anim, Content);
+            Storyboard.SetTargetProperty(anim, new PropertyPath(Grid.OpacityProperty));
+            storyboard.Begin(this);
+        }
+
+        private async void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            AnimateAllOut();
+            await Task.Delay(700);
+            ChangePageEvent(new EventArgs());
         }
     }
 }
