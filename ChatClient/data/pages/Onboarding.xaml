@@ -64,7 +64,7 @@
         </Path>
         <Grid x:Name="Content" Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Left" Margin="262,139,0,0" Text="Welcome to FortSec chat" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Humnst777 Lt BT" Foreground="White" Height="48" Width="528" FontSize="48" Grid.ColumnSpan="2"/>
-            <Label Content="Enter the URL of the FortSec Chat REST host" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
+            <Label Content="Enter the URL of the FortSec Chat host" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
             <Button Style="{StaticResource SimpleBtn}" x:Name="EnterButton" Height="44" Width="44" Margin="601,419,397,146" Cursor="Hand" Click="EnterButton_Click">
                 <Image Source="/data/assets/angle_right.png" />
                 <Button.Triggers>

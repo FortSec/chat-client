@@ -9,6 +9,6 @@
       Title="Loading" Background="#FF293147" Loaded="Page_Loaded">
 
     <Grid x:Name="MainGrid">
-        <TextBlock HorizontalAlignment="Center" Text="Robí sa tom..." TextWrapping="Wrap" VerticalAlignment="Center" Foreground="White" FontFamily="Humnst777 Lt BT" FontSize="24"/>
+        <TextBlock HorizontalAlignment="Center" Text="Doing some magic." TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="White" FontFamily="Humnst777 Blk BT" FontSize="24" Margin="0,0,0,290"/>
     </Grid>
 </Page>

@@ -27,6 +27,17 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="Button" x:Key="StandardBtn">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" CornerRadius="5" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="Button" x:Key="SimpleBtn">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Template">
@@ -54,5 +65,17 @@
             <Image Source="/data/assets/cancel.png" Height="13" Width="13" />
         </Button>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Margin="0,25,0,0" Background="#FF303952"/>
+        <Border x:Name="ExceptionBox" Margin="34,560,34,27" CornerRadius="6" Background="#FF1E2536">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="241*"/>
+                    <ColumnDefinition Width="593*"/>
+                    <ColumnDefinition Width="140*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Something isn't right..." Foreground="#FFE66767" FontFamily="Humnst777 Blk BT" FontSize="16" Margin="21,11,21,11" VerticalAlignment="Center"/>
+                <TextBlock x:Name="ExceptionTextBlock" Grid.Column="1" Text="I don't know what though. How strange..." TextWrapping="Wrap" FontSize="16" Margin="16,16,31,16" VerticalAlignment="Center"/>
+                <Button Style="{StaticResource StandardBtn}" Content="Got it!" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="31" Width="76" BorderBrush="{x:Null}" Foreground="White" Background="#FF303952" FontFamily="Humnst777 BlkCn BT" FontStretch="Normal" FontStyle="Normal" Cursor="Hand"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

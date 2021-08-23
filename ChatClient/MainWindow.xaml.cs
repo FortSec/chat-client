@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
 using ChatClient.data.pages;
+using ChatClient.Extensions;
 
 namespace ChatClient
 {
@@ -38,6 +39,9 @@ namespace ChatClient
         {
             InitializeComponent();
             onboarding.ChangePage += new EventHandler(onboarding_ChangePage);
+            onboarding.ExceptionOccured += new EventHandler(DisplayException);
+            onboarding.ReloadPage += new EventHandler(onboarding_ReloadPage);
+            ExceptionBox.Visibility = Visibility.Collapsed;
         }
 
         private void MainWindow1_MouseDown(object sender, MouseButtonEventArgs e)
@@ -77,6 +81,33 @@ namespace ChatClient
         public void onboarding_ChangePage(object sender, EventArgs e)
         {
             MainFrame.NavigationService.Navigate(loading);
+        }
+
+        public void onboarding_ReloadPage(object sender, EventArgs e)
+        {
+            onboarding = new Onboarding();
+            MainFrame.NavigationService.Navigate(onboarding);
+        }
+
+        public void DisplayException(object sender, EventArgs e)
+        {
+            VisualExceptionArgs e_args = e as VisualExceptionArgs;
+            ExceptionTextBlock.Text = e_args.ExceptionText;
+            ExceptionBox.Visibility = Visibility.Visible;
+            ThicknessAnimation anim = new ThicknessAnimation();
+            anim.From = new Thickness(34, 639, 34, -52);
+            anim.To = new Thickness(34, 560, 34, 27);
+            anim.Duration = new Duration(TimeSpan.FromMilliseconds(400));
+            BackEase ease = new BackEase();
+            ease.EasingMode = EasingMode.EaseOut;
+            ease.Amplitude = 0.3d;
+            anim.EasingFunction = ease;
+            anim.AccelerationRatio = 0.1d;
+            storyboard = new Storyboard();
+            storyboard.Children.Add(anim);
+            Storyboard.SetTarget(anim, ExceptionBox);
+            Storyboard.SetTargetProperty(anim, new PropertyPath(Border.MarginProperty));
+            storyboard.Begin(this);
         }
     }
 }
