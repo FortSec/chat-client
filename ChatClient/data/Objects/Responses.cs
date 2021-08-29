@@ -14,6 +14,7 @@ namespace ChatClient.Responses
     {
         public bool Accepts_Clients { get; set; }
         public bool Accepts_Guests { get; set; }
+        public bool Registration_Allowed { get; set; }
         public int Connected_Clients { get; set; }
         public string Status { get; set; }
     }

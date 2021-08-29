@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
+using ChatClient.Utils;
+
 namespace ChatClient.Extensions
 {
     class Extensions : DependencyObject
@@ -28,6 +30,25 @@ namespace ChatClient.Extensions
     public class VisualExceptionArgs : EventArgs
     {
         public string ExceptionText { get; set; }
+    }
+
+    public class MainViewEntryArgs : EventArgs
+    {
+        public string ServerURL { get; set; }
+        public Client Client { get; set; }
+    }
+
+    public class Client
+    {
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public Client(string username, string mail, string password)
+        {
+            Username = username;
+            Email = mail;
+            Password = Utilities.HashSHA1(password);
+        }
     }
 
     static class ClientTools
@@ -60,6 +81,21 @@ namespace ChatClient.Extensions
         }
 
         public static void EndBusyCursor()
+        {
+            ResetCursor();
+        }
+
+        public static void BeginHandCursor()
+        {
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        public static void BeginTextCursor()
+        {
+            Mouse.OverrideCursor = Cursors.IBeam;
+        }
+
+        public static void ResetCursor()
         {
             Mouse.OverrideCursor = Cursors.Arrow;
         }

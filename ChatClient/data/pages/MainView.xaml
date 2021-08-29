@@ -1,0 +1,55 @@
+﻿<Page x:Class="ChatClient.data.pages.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatClient.data.pages"
+      xmlns:control="clr-namespace:ChatClient.CustomControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="609.04" d:DesignWidth="1042"
+      Title="MainView" Background="#FF303952">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="497*"/>
+            <RowDefinition Height="74*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="114*"/>
+            <ColumnDefinition Width="407*"/>
+        </Grid.ColumnDefinitions>
+        <ItemsControl
+                  BorderThickness="2"
+                  BorderBrush="Red"
+                  x:Name="BubblesBox" Grid.Column="1" Margin="10,38,10,0" Grid.RowSpan="2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <RichTextBox HorizontalAlignment="Right"
+                             VerticalAlignment="Stretch">
+                        <FlowDocument>
+                            <Paragraph Name="Para">
+                                <Run Text="{Binding Text}" />
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="Sender">
+                            <Setter TargetName="Para"
+                                Property="TextAlignment"
+                                Value="Right" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}"
+                                 Value="Receiver">
+                            <Setter TargetName="Para"
+                                Property="TextAlignment"
+                                Value="Left" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <control:BetterTextBox x:Name="MessageToSendBox" BTBCornerRadius="10" BTBBackground="#FF394668" BTBBorderColor="Transparent" Margin="10,15,10,15" Foreground="White" BTBFontSize="16" BTBVContentAlign="Center" Grid.Column="1" Grid.Row="2" Background="#00293147"/>
+        <Rectangle Grid.RowSpan="3" Fill="#FF293147"/>
+    </Grid>
+</Page>

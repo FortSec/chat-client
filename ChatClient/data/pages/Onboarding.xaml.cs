@@ -33,7 +33,10 @@ namespace ChatClient.data.pages
         public event EventHandler ChangePage;
         public event EventHandler ExceptionOccured;
         public event EventHandler ReloadPage;
+        public event EventHandler ConnectingInProgress;
+        public event EventHandler ConnectionInited;
         private static readonly HttpClient client = new HttpClient();
+        private bool connectBtnReserved = false;
 
         private void ChangePageEvent(EventArgs e)
         {
@@ -43,8 +46,17 @@ namespace ChatClient.data.pages
 
         private void ReloadPageEvent(EventArgs e)
         {
-            if (ReloadPage != null)
-                ReloadPage(this, e);
+            ReloadPage?.Invoke(this, e);
+        }
+
+        private void ConnectionInitedEvent(EventArgs e)
+        {
+            ConnectionInited?.Invoke(this, e);
+        }
+
+        private void ConnectingInProgressEvent(EventArgs e)
+        {
+            ConnectingInProgress?.Invoke(this, e);
         }
 
         private void ExceptionOccuredEvent(VisualExceptionArgs e)
@@ -96,6 +108,8 @@ namespace ChatClient.data.pages
 
         private void AnimateAllOut()
         {
+            Storyboard polyAnim = FindResource("BGPolyStoryboard") as Storyboard;
+            polyAnim.Begin();
             DoubleAnimation anim = new DoubleAnimation();
             anim.To = 0.0d;
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(400));
@@ -108,8 +122,13 @@ namespace ChatClient.data.pages
 
         private async void EnterButton_Click(object sender, RoutedEventArgs e)
         {
+            if (connectBtnReserved)
+                return;
+            connectBtnReserved = true;
             VisualExceptionArgs event_args = new VisualExceptionArgs();
             string requestedUrl = MainTextBox.GetBTBValue();
+            if (requestedUrl == "localdebug")
+                requestedUrl = "127.0.0.1:5000";
             requestedUrl = ClientTools.NormalizeURL(requestedUrl);
             if (requestedUrl == "invalid url")
             {
@@ -126,6 +145,8 @@ namespace ChatClient.data.pages
                 ChangePageEvent(new EventArgs());
                 InitConnection();
             }
+            await Task.Delay(650);
+            connectBtnReserved = false;
         }
 
         private async void InitConnection()
@@ -135,6 +156,8 @@ namespace ChatClient.data.pages
             Status jsonStatusResponse;
             VisualExceptionArgs event_args = new VisualExceptionArgs();
             string requestedUrl = MainTextBox.GetBTBValue();
+            if (requestedUrl == "localdebug")
+                requestedUrl = "127.0.0.1:5000";
             requestedUrl = ClientTools.NormalizeURL(requestedUrl);
             try
             {
@@ -165,11 +188,26 @@ namespace ChatClient.data.pages
                 if(jsonStatusResponse.Data.Status == "open" && jsonStatusResponse.Data.Accepts_Clients)
                 {
                     ClientTools.EndBusyCursor();
-                    MessageBox.Show("connecting");
+                    ConnectingInProgressEvent(new EventArgs());
+                    if(jsonStatusResponse.Data.Accepts_Guests)
+                    {
+                        MainViewEntryArgs args = new MainViewEntryArgs();
+                        args.ServerURL = requestedUrl;
+                        args.Client = new Client("Guest", "negus@gue.st", "guest");
+                        ConnectionInitedEvent(args);
+                    } else
+                    {
+                        ClientTools.EndBusyCursor();
+                        event_args.ExceptionText = "Login is required to access this server.";
+                        ExceptionOccuredEvent(event_args);
+                        ReloadPageEvent(new EventArgs());
+                    }
                 } else
                 {
                     ClientTools.EndBusyCursor();
-                    MessageBox.Show($"Status: {jsonStatusResponse.Data.Status}\nAccepts clients: {jsonStatusResponse.Data.Accepts_Clients.ToString()}");
+                    event_args.ExceptionText = "The server is currently not open or it just doesn't accept any clients.";
+                    ExceptionOccuredEvent(event_args);
+                    ReloadPageEvent(new EventArgs());
                 }
             } else
             {

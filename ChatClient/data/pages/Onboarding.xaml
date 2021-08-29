@@ -9,6 +9,16 @@
       d:DesignHeight="609.04" d:DesignWidth="1042"
       Title="Onboarding" Background="#FF303952">
     <Page.Resources>
+        <Storyboard x:Key="BGPolyStoryboard">
+            <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 375" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 272" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 395" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 306" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+            <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
+        </Storyboard>
         <ControlTemplate x:Key="RoundCornerTxtBox" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
                 x:Name="Bd" BorderBrush="White"
@@ -67,23 +77,6 @@
             <Label Content="Enter the URL of the FortSec Chat host" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="365,201,0,0" VerticalAlignment="Top" Height="31" Width="312" Grid.ColumnSpan="2" FontSize="16" FontFamily="Humnst777 Lt BT" Foreground="#7FFFFFFF"/>
             <Button Style="{StaticResource SimpleBtn}" x:Name="EnterButton" Height="44" Width="44" Margin="601,419,397,146" Cursor="Hand" Click="EnterButton_Click">
                 <Image Source="/data/assets/angle_right.png" />
-                <Button.Triggers>
-                    <EventTrigger RoutedEvent="Button.Click">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 375" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 272" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 395" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 306" Storyboard.TargetProperty="Point" Duration="0:0:0.2"/>
-
-                                <PointAnimation Storyboard.TargetName="BgPoly_BL" To="0, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPoly_BR" To="1042, 700" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPolyShadow_BL" To="0, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
-                                <PointAnimation Storyboard.TargetName="BgPolyShadow_BR" To="1042, 800" Storyboard.TargetProperty="Point" Duration="0:0:0.5" BeginTime="0:0:0.2"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Triggers>
             </Button>
             <control:BetterTextBox BTBTextChanged="MainTextBox_BTBTextChanged" x:Name="MainTextBox" Margin="397,419,397,146" Grid.ColumnSpan="2" Foreground="White" BTBFontSize="24" Height="44" Background="#FF303952" BTBVContentAlign="Center"/>
         </Grid>

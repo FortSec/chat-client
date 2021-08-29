@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Diagnostics;
 
+using ChatClient.Extensions;
 using ChatClient.CustomControls;
 
 namespace ChatClient.CustomControls
@@ -27,6 +28,8 @@ namespace ChatClient.CustomControls
         public static readonly DependencyProperty BTBfontSizeProperty = DependencyProperty.Register("BTBFontSize", typeof(int), typeof(BetterTextBox), new PropertyMetadata(16));
         public static readonly DependencyProperty BTBpaddingProperty = DependencyProperty.Register("BTBPadding", typeof(string), typeof(BetterTextBox), new PropertyMetadata("5,5,5,5"));
         public static readonly DependencyProperty BTBvContentAlignProperty = DependencyProperty.Register("BTBVContentAlign", typeof(string), typeof(BetterTextBox), new PropertyMetadata("Top"));
+        public static readonly DependencyProperty BTBborderColorProperty = DependencyProperty.Register("BTBBorderColor", typeof(string), typeof(BetterTextBox), new PropertyMetadata("White"));
+        public static readonly DependencyProperty BTBcornerRadiusProperty = DependencyProperty.Register("BTBCornerRadius", typeof(int), typeof(BetterTextBox), new PropertyMetadata(2));
         public event EventHandler BTBTextChanged;
 
         public int BTBFontSize
@@ -45,9 +48,33 @@ namespace ChatClient.CustomControls
             set { SetValue(BTBvContentAlignProperty, value); }
         }
 
+        public string BTBBorderColor
+        {
+            get { return (string)GetValue(BTBborderColorProperty); }
+            set { SetValue(BTBborderColorProperty, value); }
+        }
+
+        public int BTBCornerRadius
+        {
+            get { return (int)GetValue(BTBcornerRadiusProperty); }
+            set { SetValue(BTBcornerRadiusProperty, value); }
+        }
+
         public BetterTextBox()
         {
             InitializeComponent();
+            EventManager.RegisterClassHandler(typeof(TextBox), TextBox.MouseEnterEvent, new RoutedEventHandler(TextBox_MouseEnter));
+            EventManager.RegisterClassHandler(typeof(TextBox), TextBox.MouseLeaveEvent, new RoutedEventHandler(TextBox_LeaveEvent));
+        }
+
+        private void TextBox_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            ClientTools.BeginTextCursor();
+        }
+
+        private void TextBox_LeaveEvent(object sender, RoutedEventArgs e)
+        {
+            ClientTools.ResetCursor();
         }
 
         public string GetBTBValue()

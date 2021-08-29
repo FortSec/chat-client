@@ -44,5 +44,10 @@ namespace ChatClient.data.pages
             Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(Grid.OpacityProperty));
             storyboard.Begin(this);
         }
+
+        public void ChangeText(string nText)
+        {
+            LoadingText.Text = nText;
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="FortSec chat" Height="650" Background="#FF293147" Foreground="White" FontFamily="Humnst777 Lt BT" FontSize="14" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width="1042" MouseDown="MainWindow1_MouseDown" WindowStyle="SingleBorderWindow" Loaded="MainWindow1_Loaded">
+        Title="FortSec chat" Height="650" Background="#FF293147" Foreground="White" FontFamily="Humnst777 Blk BT" FontSize="14" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width="1042" MouseDown="MainWindow1_MouseDown" WindowStyle="SingleBorderWindow" Loaded="MainWindow1_Loaded" FontWeight="Normal" FontStyle="Normal">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="0"/>
     </WindowChrome.WindowChrome>
@@ -65,7 +65,7 @@
             <Image Source="/data/assets/cancel.png" Height="13" Width="13" />
         </Button>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Margin="0,25,0,0" Background="#FF303952"/>
-        <Border x:Name="ExceptionBox" Margin="34,560,34,27" CornerRadius="6" Background="#FF1E2536">
+        <Border x:Name="ExceptionBox" Margin="34,560,34,27" CornerRadius="6" Background="#FF1E2536" Panel.ZIndex="100000000">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="241*"/>
@@ -73,8 +73,8 @@
                     <ColumnDefinition Width="140*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Something isn't right..." Foreground="#FFE66767" FontFamily="Humnst777 Blk BT" FontSize="16" Margin="21,11,21,11" VerticalAlignment="Center"/>
-                <TextBlock x:Name="ExceptionTextBlock" Grid.Column="1" Text="I don't know what though. How strange..." TextWrapping="Wrap" FontSize="16" Margin="16,16,31,16" VerticalAlignment="Center"/>
-                <Button Style="{StaticResource StandardBtn}" Content="Got it!" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="31" Width="76" BorderBrush="{x:Null}" Foreground="White" Background="#FF303952" FontFamily="Humnst777 BlkCn BT" FontStretch="Normal" FontStyle="Normal" Cursor="Hand"/>
+                <TextBlock x:Name="ExceptionTextBlock" Grid.Column="1" Text="I don't know what though. How strange..." TextWrapping="Wrap" FontSize="16" Margin="16,16,31,16" VerticalAlignment="Center" FontWeight="Normal" FontFamily="Humanst521 BT"/>
+                <Button x:Name="ExceptionCloseBtn" Style="{StaticResource StandardBtn}" Content="Got it!" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="31" Width="76" BorderBrush="{x:Null}" Foreground="White" Background="#FF303952" FontFamily="Humnst777 BlkCn BT" FontStretch="Normal" FontStyle="Normal" Cursor="Hand" Panel.ZIndex="100000" Click="HideException"/>
             </Grid>
         </Border>
     </Grid>

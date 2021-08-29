@@ -14,8 +14,8 @@
                 x:Key="BoolToVisibility" />
         <ControlTemplate x:Key="RoundCornerTxtBox" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="White"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+                x:Name="Bd" BorderBrush="{Binding BTBBorderColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding BTBCornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
         </ControlTemplate>
