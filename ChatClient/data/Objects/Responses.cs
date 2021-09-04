@@ -29,4 +29,16 @@ namespace ChatClient.Responses
     {
         public string Path { get; set; }
     }
+
+    public class UserGET
+    {
+        public string Response { get; set; }
+        public UserGET_Data Data { get; set; }
+    }
+
+    public class UserGET_Data
+    {
+        public string Name { get; set; }
+        public string UUID { get; set; }
+    }
 }

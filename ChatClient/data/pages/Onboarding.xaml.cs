@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using ChatClient.Responses;
 using ChatClient.Extensions;
+using ChatClient;
 
 namespace ChatClient.data.pages
 {
@@ -37,6 +38,7 @@ namespace ChatClient.data.pages
         public event EventHandler ConnectionInited;
         private static readonly HttpClient client = new HttpClient();
         private bool connectBtnReserved = false;
+        private LoginDialog loginDialog;
 
         private void ChangePageEvent(EventArgs e)
         {
@@ -198,9 +200,44 @@ namespace ChatClient.data.pages
                     } else
                     {
                         ClientTools.EndBusyCursor();
-                        event_args.ExceptionText = "Login is required to access this server.";
-                        ExceptionOccuredEvent(event_args);
-                        ReloadPageEvent(new EventArgs());
+                        loginDialog = new LoginDialog();
+                        bool? loginResult = loginDialog.ShowDialog();
+                        if(!(loginResult.HasValue && loginResult.Value))
+                        {
+                            LoginRequired();
+                        } else
+                        {
+                            try
+                            {
+                                jsonPathResponse = await client.GetFromJsonAsync<APIPath>($"{requestedUrl}path/user_get");
+                            }
+                            catch (HttpRequestException e)
+                            {
+                                ClientTools.EndBusyCursor();
+                                event_args.ExceptionText = $"{e.Message}";
+                                ExceptionOccuredEvent(event_args);
+                                ReloadPageEvent(new EventArgs());
+                                return;
+                            }
+                            string password = loginDialog.Password;
+                            string email = loginDialog.Email;
+                            string token = Utilities.ConstructToken(email, Utilities.HashSHA1(password));
+                            UserGET jsonUserGetResponse = APITools.GetRequest<UserGET>(jsonPathResponse.Data.Path, token);
+                            if(jsonUserGetResponse.Response == "success")
+                            {
+                                MainViewEntryArgs args = new MainViewEntryArgs();
+                                args.ServerURL = requestedUrl;
+                                args.Client = new Client(jsonUserGetResponse.Data.Name, email, password);
+                                ConnectionInitedEvent(args);
+                            } else
+                            {
+                                ClientTools.EndBusyCursor();
+                                event_args.ExceptionText = "We were refused by the server, because the credentials were wrong!";
+                                ExceptionOccuredEvent(event_args);
+                                ReloadPageEvent(new EventArgs());
+                                return;
+                            }
+                        }
                     }
                 } else
                 {
@@ -216,6 +253,17 @@ namespace ChatClient.data.pages
                 ExceptionOccuredEvent(event_args);
                 ReloadPageEvent(new EventArgs());
             }
+        }
+
+        private void LoginRequired()
+        {
+            VisualExceptionArgs event_args = new VisualExceptionArgs();
+            ClientTools.EndBusyCursor();
+            loginDialog = new LoginDialog();
+            loginDialog.ShowDialog();
+            event_args.ExceptionText = "Login is required to access this server.";
+            ExceptionOccuredEvent(event_args);
+            ReloadPageEvent(new EventArgs());
         }
     }
 }

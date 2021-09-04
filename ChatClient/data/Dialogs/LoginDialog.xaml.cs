@@ -10,7 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ChatClient.data.Dialogs
+using ChatClient.Utils;
+
+namespace ChatClient
 {
     /// <summary>
     /// Interaction logic for LoginDialog.xaml
@@ -21,5 +23,31 @@ namespace ChatClient.data.Dialogs
         {
             InitializeComponent();
         }
+
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        private void LoginDialog1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Point mPoints = Mouse.GetPosition(LoginDialog1);
+                if (mPoints.Y <= 25)
+                    this.DragMove();
+            }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        private void ConfirmBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Email = Creds_Mail_Control.GetBTBValue();
+            Password = Creds_Pass_Control.GetBPBValue();
+            DialogResult = true;
+        }
     }
+
 }

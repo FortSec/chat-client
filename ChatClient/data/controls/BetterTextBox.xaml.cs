@@ -31,6 +31,7 @@ namespace ChatClient.CustomControls
         public static readonly DependencyProperty BTBborderColorProperty = DependencyProperty.Register("BTBBorderColor", typeof(string), typeof(BetterTextBox), new PropertyMetadata("White"));
         public static readonly DependencyProperty BTBcornerRadiusProperty = DependencyProperty.Register("BTBCornerRadius", typeof(int), typeof(BetterTextBox), new PropertyMetadata(2));
         public event EventHandler BTBTextChanged;
+        public event EventHandler BTBEnterDown;
 
         public int BTBFontSize
         {
@@ -82,6 +83,11 @@ namespace ChatClient.CustomControls
             return MainTextBox.Text;
         }
 
+        public void SetBTBValue(string newVal)
+        {
+            MainTextBox.Text = newVal;
+        }
+
         public Brush BTBBackground
         {
             get { return MainTextBox.Background; }
@@ -127,6 +133,14 @@ namespace ChatClient.CustomControls
         private void MainTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             UpdateCaretPosition();
+        }
+
+        private void MainTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                BTBEnterDown?.Invoke(this, e);
+            }
         }
     }
 }

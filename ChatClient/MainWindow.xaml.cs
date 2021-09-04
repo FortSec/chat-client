@@ -183,8 +183,16 @@ namespace ChatClient
         private void onboarding_ConnectionInited(object sender, EventArgs e)
         {
             MainViewEntryArgs args = e as MainViewEntryArgs;
-            MainView mainview = new MainView(args.ServerURL);
+            MainView mainview = new MainView(args.ServerURL, args.Client);
+            mainview.ConnectionFailed += Mainview_ConnectionFailed;
             MainFrame.NavigationService.Navigate(mainview);
+        }
+
+        private void Mainview_ConnectionFailed(object sender, EventArgs e)
+        {
+            onboarding_ReloadPage(new object(), new EventArgs());
+            VisualExceptionArgs e_args = e as VisualExceptionArgs;
+            DisplayExceptionDirect(e_args.ExceptionText);
         }
     }
 }

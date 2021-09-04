@@ -19,37 +19,31 @@
             <ColumnDefinition Width="114*"/>
             <ColumnDefinition Width="407*"/>
         </Grid.ColumnDefinitions>
-        <ItemsControl
-                  BorderThickness="2"
-                  BorderBrush="Red"
-                  x:Name="BubblesBox" Grid.Column="1" Margin="10,38,10,0" Grid.RowSpan="2">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <RichTextBox HorizontalAlignment="Right"
-                             VerticalAlignment="Stretch">
-                        <FlowDocument>
-                            <Paragraph Name="Para">
-                                <Run Text="{Binding Text}" />
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Type}" Value="Sender">
-                            <Setter TargetName="Para"
-                                Property="TextAlignment"
-                                Value="Right" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Type}"
-                                 Value="Receiver">
-                            <Setter TargetName="Para"
-                                Property="TextAlignment"
-                                Value="Left" />
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <control:BetterTextBox x:Name="MessageToSendBox" BTBCornerRadius="10" BTBBackground="#FF394668" BTBBorderColor="Transparent" Margin="10,15,10,15" Foreground="White" BTBFontSize="16" BTBVContentAlign="Center" Grid.Column="1" Grid.Row="2" Background="#00293147"/>
+        <ScrollViewer x:Name="BubblesScroll" VerticalScrollBarVisibility="Hidden" Grid.Column="1" Margin="10,0,10,0" Grid.Row="1">
+            <ItemsControl
+                  x:Name="ChatBubblesBox" Background="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="128"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding Sender}" Foreground="White" VerticalContentAlignment="Center" FontWeight="Bold" />
+                            <Label Content="{Binding Text}" Grid.Column="1" Foreground="White" VerticalContentAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <control:BetterTextBox x:Name="MessageToSendBox" BTBCornerRadius="10" BTBBackground="#FF394668" BTBEnterDown="MessageToSendBox_BTBEnterDown" BTBBorderColor="Transparent" Margin="10,15,10,15" Foreground="White" BTBFontSize="16" BTBVContentAlign="Center" Grid.Column="1" Grid.Row="2" Background="#00293147"/>
         <Rectangle Grid.RowSpan="3" Fill="#FF293147"/>
     </Grid>
 </Page>

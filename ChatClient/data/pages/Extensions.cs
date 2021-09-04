@@ -42,12 +42,12 @@ namespace ChatClient.Extensions
     {
         public string Username { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        public string Token { get; set; }
         public Client(string username, string mail, string password)
         {
             Username = username;
             Email = mail;
-            Password = Utilities.HashSHA1(password);
+            Token = Utilities.ConstructToken(mail, Utilities.HashSHA1(password));
         }
     }
 
