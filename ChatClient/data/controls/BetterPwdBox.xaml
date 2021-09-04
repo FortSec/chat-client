@@ -1,0 +1,42 @@
+﻿<UserControl
+        x:Class="ChatClient.CustomControls.BetterPwdBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        d:DesignHeight="23"
+        d:DesignWidth="300"
+        xmlns:c="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+        Name="Control">
+    <UserControl.Resources>
+        <c:BooleanToVisibilityConverter
+                x:Key="BoolToVisibility" />
+        <ControlTemplate x:Key="RoundCornerTxtBox" TargetType="{x:Type PasswordBox}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="{Binding BPBBorderColor, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{Binding BPBCornerRadius, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <PasswordBox
+                Name="MainTextBox"
+                Template="{StaticResource RoundCornerTxtBox}"
+                VerticalContentAlignment="{Binding BPBVContentAlign, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="16" Foreground="White" Padding="6,0,0,0" MouseEnter="MainTextBox_MouseEnter" MouseLeave="MainTextBox_MouseLeave"
+            />
+        <Canvas
+                Visibility="{Binding IsKeyboardFocusWithin,
+                    ElementName=Control,
+                    Converter={StaticResource BoolToVisibility}}"
+                Height="{Binding ActualHeight, ElementName=MainTextBox}"
+                Width="{Binding ActualWidth, ElementName=MainTextBox}">
+            <Rectangle
+                    HorizontalAlignment="Left"
+                    Name="Caret"
+                    Width="1"
+                    Fill="White" />
+        </Canvas>
+    </Grid>
+</UserControl>

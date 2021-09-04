@@ -1,0 +1,14 @@
+﻿<Page x:Class="ChatClient.data.pages.Loading"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ChatClient.data.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="609.04" d:DesignWidth="1042"
+      Title="Loading" Background="#FF293147" Loaded="Page_Loaded">
+
+    <Grid x:Name="MainGrid">
+        <TextBlock x:Name="LoadingText" HorizontalAlignment="Center" Text="Doing some magic." TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="White" FontFamily="Humnst777 Blk BT" FontSize="24" Margin="0,0,0,290"/>
+    </Grid>
+</Page>
