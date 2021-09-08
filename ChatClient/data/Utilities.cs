@@ -16,6 +16,8 @@ using ChatClient.Responses;
 
 namespace ChatClient.Utils
 {
+    public class Null {}
+
     static class Utilities
     {
         public static string Margin_EditOneVector(string toEdit, double valueToAdd, string vector)
@@ -176,11 +178,15 @@ namespace ChatClient.Utils
 
     public static class APITools
     {
-        public static TResult GetRequest<TResult>(string url, string? token)
+        public static TResult GetRequest<TResult>(string url, string token = null, string requestData = null)
         {
             ClientTools.BeginBusyCursor();
+            if(requestData != null)
+            {
+                url = $"{url}?{requestData}";
+            }
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
-            if (token.Length > 0)
+            if (token != null)
                 httpRequest.Headers["Authorization"] = $"Bearer {token}";
             HttpWebResponse httpResponse = (HttpWebResponse)httpRequest.GetResponse();
             using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -190,6 +196,19 @@ namespace ChatClient.Utils
                 TResult json = JsonConvert.DeserializeObject<TResult>(result);
                 return json;
             }
+        }
+
+        public static string GetPath(string baseUrl, string toWhat, string parameters = null)
+        {
+            APIPath pathData;
+            if (parameters == null)
+            {
+                pathData = GetRequest<APIPath>($"{baseUrl}path/{toWhat}");
+            } else
+            {
+                pathData = GetRequest<APIPath>($"{baseUrl}path/{toWhat}", null, parameters);
+            }
+            return pathData.Data.Path;
         }
     }
 }

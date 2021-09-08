@@ -16,6 +16,7 @@ using Caliburn.Micro;
 using ChatClient.Utils;
 using ChatClient.Extensions;
 using ChatClient.Items;
+using ChatClient.Responses;
 
 namespace ChatClient.data.pages
 {
@@ -78,14 +79,16 @@ namespace ChatClient.data.pages
         private void OnJoined(SocketIOResponse response)
         {
             var obj = response.GetValue();
-            string user_name = obj.GetProperty("user_name").GetString();
+            string requestUrl = APITools.GetPath(ServerURL, "user_get_about", $"uuid={obj.GetProperty("user_name").GetString()}");
+            string user_name = APITools.GetRequest<AboutUser>(requestUrl, ThisClient.Token).Data.Name;
             AppendMessage($"{user_name} has joined.");
         }
 
         private void OnLeft(SocketIOResponse response)
         {
             var obj = response.GetValue();
-            string user_name = obj.GetProperty("user_name").GetString();
+            string requestUrl = APITools.GetPath(ServerURL, "user_get_about", $"uuid={obj.GetProperty("user_name").GetString()}");
+            string user_name = APITools.GetRequest<AboutUser>(requestUrl, ThisClient.Token).Data.Name;
             AppendMessage($"{user_name} has left.");
         }
 
@@ -113,11 +116,25 @@ namespace ChatClient.data.pages
 
         private void AppendMessage(string raw_message, string sender="SYSTEM")
         {
-            ChatItem chatItem = new ChatItem()
+            ChatItem chatItem;
+            if (sender != "SYSTEM")
             {
-                Text = raw_message,
-                Sender = sender
-            };
+                string requestUrl = APITools.GetPath(ServerURL, "user_get_about", $"uuid={sender}");
+                AboutUser aboutUser = APITools.GetRequest<AboutUser>(requestUrl, ThisClient.Token);
+                chatItem = new ChatItem()
+                {
+                    Text = raw_message,
+                    Sender = aboutUser.Data.Name
+                };
+
+            } else
+            {
+                chatItem = new ChatItem()
+                {
+                    Text = raw_message,
+                    Sender = sender
+                };
+            }
             ChatBubbles.Add(chatItem);
             BubblesScroll.ScrollToBottom();
         }

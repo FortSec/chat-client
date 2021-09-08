@@ -41,4 +41,17 @@ namespace ChatClient.Responses
         public string Name { get; set; }
         public string UUID { get; set; }
     }
+
+    public class AboutUser
+    {
+        public string Response { get; set; }
+        public AboutUser_Data Data { get; set; }
+    }
+
+    public class AboutUser_Data
+    {
+        public string UUID { get; set; }
+        public string Name { get; set; }
+        public string Roles { get; set; }
+    }
 }
